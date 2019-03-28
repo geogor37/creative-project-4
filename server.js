@@ -50,4 +50,17 @@ app.post('/api/wishlists', async (req, res) => {
   }
 });
 
+app.post('/api/wishlists/:id/items', async (req, res) => {
+  let id = req.params.id;
+  let item = req.body.item;
+  console.log("ID to add item to: " + id);
+  let wishlist = await Wishlist.findOne({
+    _id: id
+  });
+  console.log("Item to be added: " + item);
+  wishlist.items.push(item);
+  wishlist.save();
+  res.send(item);
+});
+
 app.listen(3000, () => console.log('Server listening on port 3000!'));

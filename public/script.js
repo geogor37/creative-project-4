@@ -13,7 +13,6 @@ var app = new Vue({
     async getLists() {
       try {
         let response = await axios.get("/api/wishlists");
-        console.log(response.data);
         this.lists = response.data;
         return true;
       } catch (error) {
@@ -46,10 +45,17 @@ var app = new Vue({
         this.selectedList = list;
       }
     },
-    addItemToList() {
-      if (this.newItemName.trim().length > 0) {
-        this.selectedList.items.push(this.newItemName);
-        this.newItemName = '';
+    async addItemToList() {
+      try {
+        if (this.newItemName.trim().length > 0) {
+          let itemResponse = axios.post("/api/wishlists/" + this.selectedList._id + "/items", {
+            item: this.newItemName
+          });
+          this.newItemName = '';
+          this.selectedList.items.push((await itemResponse).data);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     deleteItem(item) {
