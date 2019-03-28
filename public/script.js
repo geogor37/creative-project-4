@@ -13,6 +13,7 @@ var app = new Vue({
     async getLists() {
       try {
         let response = await axios.get("/api/wishlists");
+        console.log(response.data);
         this.lists = response.data;
         return true;
       } catch (error) {
@@ -26,7 +27,7 @@ var app = new Vue({
             title: this.newListName
           });
           this.newListName = '';
-          this.lists.add(await listResponse);
+          this.lists.push((await listResponse).data);
         }
       } catch (error) {
         console.log(error);

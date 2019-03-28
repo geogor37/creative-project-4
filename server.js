@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/wishlist', {
 
 // Create a schema for wishlists
 const wishlistSchema = new mongoose.Schema({
-  title: String,
+  name: String,
   items: [{ type: String }]
 });
 
@@ -38,7 +38,7 @@ app.get('/api/wishlists', async (req, res) => {
 // Create a new wishlist; takes a title for the list.
 app.post('/api/wishlists', async (req, res) => {
   const wishlist = new Wishlist({
-    title: req.body.title,
+    name: req.body.title,
     items: []
   });
   try {
@@ -50,4 +50,4 @@ app.post('/api/wishlists', async (req, res) => {
   }
 });
 
-
+app.listen(3000, () => console.log('Server listening on port 3000!'));
