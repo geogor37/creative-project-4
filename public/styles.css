@@ -1,0 +1,80 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  background: #f3f3f3;
+  margin: 0;
+  height: 100%;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  margin: 0;
+  min-height: 100%;
+  /*background-color: #B3D3D6;*/
+}
+
+.box .container {
+  margin: 0 auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.footer {
+  width: 100%;
+  background-color: #385153;
+  padding: .5em 0;
+  text-align: center;
+}
+
+.outer {
+  flex: 1 1 auto;
+  display: flex;
+  margin: 20px 0;
+  height: 100%;
+}
+
+.col-sm > .row {
+  margin: 0 20px;
+}
+
+.wishlists {
+  border-right: gray 2px solid;
+}
+
+.wishlist {
+  padding: 8px;
+  vertical-align: center;
+}
+
+.wishlist > * {
+  margin: auto 0;
+  display: inline-block;
+}
+
+.wishlist > p {
+  font-size: 20px;
+}
+
+.wishlist > button {
+  margin-left: 8px;
+  margin-right: 8px;
+  height: auto;
+  float: right;
+}
+
+.wishlist:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.selected {
+  background-color: lightblue;
+}

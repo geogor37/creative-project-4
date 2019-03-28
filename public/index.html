@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/styles.css"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>Creative Project 4</title>
+</head>
+
+<body>
+<div id="app" class="box">
+  <div class="container">
+    <div class="row outer">
+      <div class="col-sm wishlists">
+        <div class="row">
+          <h1>My Wishlists</h1>
+        </div>
+        <div class="row">
+          <form @submit.prevent="createList">
+            <input type="text" v-model="newListName">
+            <button type="submit">Add List</button>
+          </form>
+        </div>
+        <br>
+        <h4 v-show="lists.length === 0" style="font-style: italic">You have no wishlists! Add one to get started.</h4>
+        <div v-for="list in lists" class="wishlist" v-bind:class="{ selected: list === selectedList }" @click="toggleSelectedList(list)">
+          <p><b>{{ list.name }}</b> - {{ list.items.length }} items</p>
+          <button @click.stop="deleteList(list)">Delete</button>
+        </div>
+      </div>
+      <div class="col-sm ">
+        <div class="row">
+          <h1 v-model="selectedList">{{ selectedList.name }}</h1>
+        </div>
+        <div class="row">
+          <form v-show="Object.keys(selectedList).length > 0" @submit.prevent="addItemToList">
+            <input type="text" v-model="newItemName">
+            <button type="submit">Add Item</button>
+          </form>
+        </div>
+        <br>
+        <ul>
+          <li v-for="item in selectedList.items" class="wishlist">
+            <p>{{ item }}</p>
+            <button @click.stop="deleteItem(item)">Delete</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://github.com/geogor37/creative-project-3" style="color: white;">Check out my repo on Github!</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="/script.js"></script>
+</body>
+</html>
