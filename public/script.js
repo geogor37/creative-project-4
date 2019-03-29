@@ -70,10 +70,20 @@ var app = new Vue({
     cancelEdit() {
       this.isEditing = false;
     },
-    editList() {
-      console.log(this.selectedList.name + " -> " + this.editListName);
-      this.editListName = '';
-      this.isEditing = false;
+    async editList() {
+      try {
+        if (this.editListName.trim().length > 0) {
+          let editResponse = axios.put("/api/wishlists/" + this.selectedList._id, {
+            name: this.editListName
+          });
+          this.editListName = '';
+          this.isEditing = false;
+          this.selectedList = (await editResponse).data;
+          this.getLists();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     async addItemToList() {
       try {

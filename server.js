@@ -50,6 +50,18 @@ app.post('/api/wishlists', async (req, res) => {
   }
 });
 
+app.put('/api/wishlists/:id', async (req, res) => {
+  let id = req.params.id;
+  let newName = req.body.name;
+  console.log("ID to modify: " + id);
+  let list = await Wishlist.findOne({
+    _id: id
+  });
+  list.name = newName;
+  list.save();
+  res.send(list);
+});
+
 // Delete the wishlist with the given ID.
 app.delete('/api/wishlists/:id', async (req, res) => {
   let id = req.params.id;
