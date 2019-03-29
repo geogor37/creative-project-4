@@ -5,6 +5,8 @@ var app = new Vue({
     newListName: '',
     selectedList: {},
     listIsSelected: false,
+    isEditing: false,
+    editListName: '',
     newItemName: '',
   },
   created() {
@@ -61,6 +63,17 @@ var app = new Vue({
         this.selectedList = list;
         this.listIsSelected = true;
       }
+    },
+    startEdit() {
+      this.isEditing = true;
+    },
+    cancelEdit() {
+      this.isEditing = false;
+    },
+    editList() {
+      console.log(this.selectedList.name + " -> " + this.editListName);
+      this.editListName = '';
+      this.isEditing = false;
     },
     async addItemToList() {
       try {

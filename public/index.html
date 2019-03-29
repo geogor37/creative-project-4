@@ -17,7 +17,7 @@
         </div>
         <div class="row">
           <form @submit.prevent="createList">
-            <input type="text" v-model="newListName">
+            <input type="text" v-model="newListName" placeholder="List Name">
             <button type="submit">Add List</button>
           </form>
         </div>
@@ -29,12 +29,20 @@
         </div>
       </div>
       <div class="col-sm ">
-        <div class="row">
+        <div class="row" v-show="Object.keys(selectedList).length > 0">
           <h1 v-model="selectedList">{{ selectedList.name }}</h1>
+          <button class="edit-button" @click="startEdit">Edit</button>
+        </div>
+        <div class="row edit-form" v-show="isEditing">
+          <form @submit.prevent="editList">
+            <input type="text" v-model="editListName" placeholder="New List Name">
+            <button type="reset" @click="cancelEdit">Cancel</button>
+            <button type="submit">Submit</button>
+          </form>
         </div>
         <div class="row">
           <form v-show="Object.keys(selectedList).length > 0" @submit.prevent="addItemToList">
-            <input type="text" v-model="newItemName">
+            <input type="text" v-model="newItemName" placeholder="Item Name">
             <button type="submit">Add Item</button>
           </form>
         </div>
