@@ -59,6 +59,7 @@ var app = new Vue({
       if (list === this.selectedList) {
         this.selectedList = {};
         this.listIsSelected = false;
+        this.isEditing = false;
       } else {
         this.selectedList = list;
         this.listIsSelected = true;
@@ -68,6 +69,7 @@ var app = new Vue({
       this.isEditing = true;
     },
     cancelEdit() {
+      this.editListName = '';
       this.isEditing = false;
     },
     async editList() {
