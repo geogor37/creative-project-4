@@ -50,6 +50,17 @@ app.post('/api/wishlists', async (req, res) => {
   }
 });
 
+// Delete the wishlist with the given ID.
+app.delete('/api/wishlists/:id', async (req, res) => {
+  let id = req.params.id;
+  console.log("ID to delete: " + id);
+  await Wishlist.deleteOne({
+    _id: id
+  });
+  res.sendStatus(200);
+});
+
+// Add an item to the wishlist with the given ID.
 app.post('/api/wishlists/:id/items', async (req, res) => {
   let id = req.params.id;
   let item = req.body.item;
@@ -61,6 +72,18 @@ app.post('/api/wishlists/:id/items', async (req, res) => {
   wishlist.items.push(item);
   wishlist.save();
   res.send(item);
+});
+
+app.delete('/api/wishlists/:id/items/:item', async (req, res) => {
+  let id = req.params.id;
+  let item = req.params.item;
+  console.log("Item to delete: " + item);
+  let wishlist = await Wishlist.findOne({
+    _id: id
+  });
+  wishlist.items.splice(wishlist.items.indexOf(item), 1);
+  wishlist.save();
+  res.sendStatus(200);
 });
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));

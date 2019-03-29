@@ -4,6 +4,7 @@ var app = new Vue({
     lists: [],
     newListName: '',
     selectedList: {},
+    listIsSelected: false,
     newItemName: '',
   },
   created() {
@@ -12,8 +13,17 @@ var app = new Vue({
   methods: {
     async getLists() {
       try {
+        let selectedListName = '';
+        if (this.listIsSelected) {
+          selectedListName = this.selectedList.name;
+        }
         let response = await axios.get("/api/wishlists");
         this.lists = response.data;
+        if (selectedListName != '') {
+          this.selectedList = this.lists.find(function (list) {
+            return list.name === selectedListName;
+          });
+        }
         return true;
       } catch (error) {
         console.log(error);
@@ -32,17 +42,24 @@ var app = new Vue({
         console.log(error);
       }
     },
-    deleteList(list) {
-      if (list === this.selectedList) {
-        this.selectedList = {};
+    async deleteList(list) {
+      try {
+        if (list === this.selectedList) {
+          this.toggleSelectedList(list);
+        }
+        axios.delete("/api/wishlists/" + list._id);
+        this.getLists();
+      } catch (error) {
+        console.log(error);
       }
-      this.lists.splice(this.lists.indexOf(list), 1);
     },
     toggleSelectedList(list) {
       if (list === this.selectedList) {
         this.selectedList = {};
+        this.listIsSelected = false;
       } else {
         this.selectedList = list;
+        this.listIsSelected = true;
       }
     },
     async addItemToList() {
@@ -59,7 +76,12 @@ var app = new Vue({
       }
     },
     deleteItem(item) {
-      this.selectedList.items.splice(this.selectedList.items.indexOf(item), 1);
+      try {
+        axios.delete("/api/wishlists/" + this.selectedList._id + "/items/" + item);
+        this.getLists();
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 });
